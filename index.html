@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Templates</title>
+
+    <!-- STYLESHEETS-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="libraries/bootstrap/css/bootstrap.min.css"
+    />
+
+    <!-- CUSTOM STYLES -->
+
+    <!-- WEBFONT -->
+    <!-- ICON -->
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Forms</h1>
+      </div>
+      <form autocomplete="off" class="" method="POST">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+              <!-- Select -->
+              <label for="country">Country Of Choice</label>
+
+              <select
+                class="form-control"
+                name="country"
+                id="country"
+                data-field="general"
+              >
+                <option value="">Select Something</option>
+                <option value="1">Beans</option>
+                <option value="2">Rice</option>
+                <option value="3">Yam</option>
+              </select>
+            </div>
+
+            <!-- Text -->
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="name"
+                placeholder="Enter Name"
+                data-field="general"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                name="email"
+                id="email"
+                data-field="general"
+                placeholder="Enter email"
+              />
+            </div>
+
+            <!-- File -->
+
+            <div class="form-group">
+              <label for="file"></label>
+              <input
+                data-field="general"
+                name="file"
+                id="file"
+                class="form-control"
+                type="file"
+              />
+            </div>
+
+            <div>
+              <!-- Radio -->
+
+              <p>Gender</p>
+              <div class="radio">
+                <label
+                  ><input
+                    type="radio"
+                    data-field="general"
+                    class="radio-gender"
+                    name="optradio"
+                  />Option 1</label
+                >
+              </div>
+              <div class="radio">
+                <label
+                  ><input
+                    type="radio"
+                    data-field="general"
+                    class="radio-gender"
+                    name="optradio"
+                  />Option 2</label
+                >
+              </div>
+              <div class="radio">
+                <label
+                  ><input
+                    type="radio"
+                    data-field="general"
+                    class="radio-gender"
+                    name="optradio"
+                  />Option 3</label
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <!-- Checkbox -->
+
+            <div>
+              <p>Select Options</p>
+              <div class="checkbox">
+                <label
+                  ><input
+                    class="check-options"
+                    type="checkbox"
+                    name="optcheck"
+                    value=""
+                    data-field="general"
+                  />Option 1</label
+                >
+              </div>
+              <div class="checkbox">
+                <label
+                  ><input
+                    class="check-options"
+                    type="checkbox"
+                    name="optcheck"
+                    value=""
+                    data-field="general"
+                  />Option 2</label
+                >
+              </div>
+              <div class="checkbox ">
+                <label
+                  ><input
+                    class="check-options"
+                    type="checkbox"
+                    value=""
+                    data-field="general"
+                    name="optcheck"
+                  />Option 3</label
+                >
+              </div>
+            </div>
+
+            <!-- TextArea -->
+
+            <div class="form-group">
+              <label for="comment">Comment:</label>
+              <textarea
+                class="form-control"
+                name="comment"
+                rows="5"
+                id="comment"
+                data-field="general"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn  btn-block">SUBMIT</button>
+      </form>
+    </div>
+
+    <script src="./libraries/bootstrap/js/jquery-3.1.1.min.js"></script>
+    <script src="./libraries/bootstrap/js/bootstrap.js"></script>
+    <script src="./assets/js/form.js"></script>
+  </body>
+</html>
