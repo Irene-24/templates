@@ -25,7 +25,7 @@ class FormChecker
      * 
      * groupShowError:
      *  -isRequired:false
-     *  -description : a function that takes care of the dealing with displaying error for radio btns and check buttons, will recieve the input field as a parameter
+     *  -description : a function that takes care of the dealing with displaying error for radio btns and check buttons, will recieve the input field and form as a parameter
      * 
      * pwd1,pwd2
      * -isRequired: false
@@ -50,7 +50,7 @@ class FormChecker
      * }
      * 
      */
-    constructor({form=null,normalShowError=null,fileErrorHandler=null,groupShowError=null,fileHandler,pwd1Id=null,pwd2Id=null,template=null})
+    constructor({form,normalShowError,fileErrorHandler,groupShowError,fileHandler,pwd1Id,pwd2Id,template})
     {
         this.form = form;        
         this.normalshowError = normalShowError;
@@ -93,7 +93,12 @@ class FormChecker
                 if(this.fields[input.name] === undefined)
                 {
                     this.fields[input.name] = false;
-                }               
+                } 
+                
+                if(input.type === 'file' && this.fileHandler)
+                {
+                  input.addEventListener('change',this.fileHandler);
+                }
 
             });
 
@@ -113,27 +118,27 @@ class FormChecker
         }
 
         if(this.pwd1Id && this.pwd2Id)
-        {
-         
-          
+        {  
           canSubmit =  this.checkPasswordMatch(this.form.querySelector(`#${this.pwd1Id}`),this.form.querySelector(`#${this.pwd2Id}`))  && canSubmit ;
         }
 
         if(canSubmit)
         {
-           // this.form.submit();
-            console.log(this.fields);
+           this.form.submit();
+            // console.log(this.fields);
             
-            console.log("%cForm submission successful",'background-color:green;margin:0;color:#fff;padding:10px;test-align:center');
+            // //just because i can
+            // console.log("%cForm submission successful",'background-color:green;margin:0;color:#fff;padding:10px;test-align:center');
 
         }    
         
-        else
-        {
-            console.log(this.fields);
+        // else
+        // {
+        //     console.log(this.fields);
             
-            console.log("%cForm submission failed",'background-color:salmon;margin:0;color:#fff;padding:10px;test-align:center');
-        }
+        //      //just because i can
+        //     console.log("%cForm submission failed",'background-color:salmon;margin:0;color:#fff;padding:10px;test-align:center');
+        // }
 
     }
 
@@ -147,8 +152,6 @@ class FormChecker
                 if (inputField.files.length > 0) 
                 {
                   this.fields[name] = true;
-
-                  if(this.fileHandler) this.fileHandler(file,inputField);
                 } 
                 else 
                 {
@@ -174,7 +177,7 @@ class FormChecker
                   if (checkCount < 1) 
                   {
                     this.fields[name] = false;
-                    if(this.groupShowError)  this.groupShowError(inputField);                   
+                    if(this.groupShowError)  this.groupShowError(inputField,this.form);                   
                     
                   }
                   else
@@ -201,7 +204,7 @@ class FormChecker
                 if (none) 
                 {
                   this.fields[name] = false;
-                  if(this.groupShowError) this.groupShowError(inputField);
+                  if(this.groupShowError) this.groupShowError(inputField,this.form);
                   
                 }
 
@@ -247,6 +250,7 @@ class FormChecker
 
           if(this.normalshowError)
           {
+            
             this.normalshowError(field1);
             this.normalshowError(field2);
           }
@@ -265,8 +269,10 @@ class FormChecker
 
 }
 
-const formA = new FormChecker({ form:document.querySelector('#formA'), normalShowError:normalShowErrorA }); 
-const formB = new FormChecker({ form:document.querySelector('#formB'), pwd1Id:'password1', pwd2Id:'password2', normalShowError:normalShowErrorB });
+//TESTING THE CLASS BY CREATING TWO INSTANCES
+const formA = new FormChecker({ form:document.querySelector('#formA'), groupShowError:groupA,  normalShowError:normalShowErrorA,fileHandler:myFileHandler, fileErrorHandler:myFileErrorHandler }); 
+
+const formB = new FormChecker({ groupShowError:groupB, form:document.querySelector('#formB'), pwd1Id:'password1', pwd2Id:'password2', normalShowError:normalShowErrorB });
 
 function normalShowErrorA(input,msg="Invalid field")
 {
@@ -278,6 +284,54 @@ function normalShowErrorB(input,msg="Invalid field")
      input.style.background = "salmon";
 
 }
+
+function myFileHandler(event)
+{
+  
+  const input = event.target;
+  const span = input.nextElementSibling;
+  if (input.files.length > 0) 
+  {
+    const file = input.files[0];
+    span.textContent = file.name;
+    span.style.color="blue";
+  }
+}
+
+function myFileErrorHandler(field)
+{
+    field.style.border = "2px solid orange";
+}
+
+function groupA(input,form)
+{
+   const name = input.name;
+  if(input.type === "checkbox")
+  {
+      form.querySelectorAll(`[name="${name}"]`).forEach(el => el.parentElement.style.color = "salmon");
+  }
+  else
+  {
+    form.querySelectorAll(`[name="${name}"]`).forEach(el => el.parentElement.style.textDecoration= "underline");
+  }
+
+}
+
+
+function groupB(input,form)
+{
+   const name = input.name;
+  if(input.type === "checkbox")
+  {
+      form.querySelectorAll(`[name="${name}"]`).forEach(el => el.parentElement.style.color = "red");
+  }
+  else
+  {
+    form.querySelectorAll(`[name="${name}"]`).forEach(el => el.parentElement.style.textDecoration= "line-through");
+  }
+
+}
+
 
 
 

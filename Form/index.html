@@ -14,7 +14,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="libraries/bootstrap/css/bootstrap.min.css"
+      href="../libraries/bootstrap/css/bootstrap.min.css"
     />
 
     <!-- CUSTOM STYLES -->
@@ -85,12 +85,13 @@
                 class="form-control"
                 type="file"
               />
+              <span class="filename"></span>
             </div>
 
             <div>
               <!-- Radio -->
 
-              <p>Gender</p>
+              <p>Option</p>
               <div class="radio">
                 <label
                   ><input
@@ -220,6 +221,44 @@
                 data-field="general"
                 placeholder="Enter password"
               />
+            
+            </div>
+
+            
+            <div>
+              <!-- Radio -->
+
+              <p>Pick one</p>
+              <div class="radio">
+                <label
+                  ><input
+                    type="radio"
+                    data-field="general"
+                    class="radio-gender"
+                    name="optradio"
+                  />Option 1</label
+                >
+              </div>
+              <div class="radio">
+                <label
+                  ><input
+                    type="radio"
+                    data-field="general"
+                    class="radio-gender"
+                    name="optradio"
+                  />Option 2</label
+                >
+              </div>
+              <div class="radio">
+                <label
+                  ><input
+                    type="radio"
+                    data-field="general"
+                    class="radio-gender"
+                    name="optradio"
+                  />Option 3</label
+                >
+              </div>
             </div>
 
        
@@ -286,8 +325,11 @@
       </form>
     </div>
 
-    <script src="./libraries/bootstrap/js/jquery-3.1.1.min.js"></script>
-    <script src="./libraries/bootstrap/js/bootstrap.js"></script>
-    <script src="./assets/js/form.js"></script>
+    <!-- JQUERY AND BOOTSTRAP -->
+    <script src="../libraries/bootstrap/js/jquery-3.1.1.min.js"></script>
+    <script src="../libraries/bootstrap/js/bootstrap.js"></script>
+
+     <!-- FORM JS -->
+    <script src="./form.js"></script>
   </body>
 </html>
