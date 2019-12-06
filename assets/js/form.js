@@ -50,13 +50,16 @@ class FormChecker
      * }
      * 
      */
-    constructor({form=null,normalShowError=null,groupShowError=null,fileHandler,pwd1=null,pwd2=null,template=null})
+    constructor({form=null,normalShowError=null,fileErrorHandler=null,groupShowError=null,fileHandler,pwd1Id=null,pwd2Id=null,template=null})
     {
         this.form = form;        
         this.normalshowError = normalShowError;
         this.groupShowError = groupShowError;
         this.fileHandler = fileHandler;
+        this.fileErrorHandler = fileErrorHandler;
         this.fields = {};
+        this.pwd1Id = pwd1Id;
+        this.pwd2Id = pwd2Id;
         this.template = template ||
         {
             general: 
@@ -79,6 +82,8 @@ class FormChecker
             }
         }
         ;
+
+      
 
         const formFields = this.form.querySelectorAll('[data-field]');
 
@@ -107,12 +112,19 @@ class FormChecker
             canSubmit = this.validate(input) && canSubmit;
         }
 
+        if(this.pwd1Id && this.pwd2Id)
+        {
+         
+          
+          canSubmit =  this.checkPasswordMatch(this.form.querySelector(`#${this.pwd1Id}`),this.form.querySelector(`#${this.pwd2Id}`))  && canSubmit ;
+        }
+
         if(canSubmit)
         {
            // this.form.submit();
             console.log(this.fields);
             
-            console.log("submit");
+            console.log("%cForm submission successful",'background-color:green;margin:0;color:#fff;padding:10px;test-align:center');
 
         }    
         
@@ -120,7 +132,7 @@ class FormChecker
         {
             console.log(this.fields);
             
-            console.log("failed");
+            console.log("%cForm submission failed",'background-color:salmon;margin:0;color:#fff;padding:10px;test-align:center');
         }
 
     }
@@ -141,7 +153,7 @@ class FormChecker
                 else 
                 {
                   this.fields[name] = false;
-                  if(this.normalshowError) this.normalshowError(inputField);
+                  if( this.fileErrorHandler) this.fileErrorHandler(inputField);
                   
                 }
                 
@@ -223,18 +235,51 @@ class FormChecker
 
     }
 
-    checkPasswordMatch()
+    checkPasswordMatch(field1,field2)
     {
+        const nameA = field1.name;
+        const nameB = field2.name;
 
+        if(field1.value !== field2.value)
+        {
+          this.fields[nameA] = false;
+          this.fields[nameB] = false;
+
+          if(this.normalshowError)
+          {
+            this.normalshowError(field1);
+            this.normalshowError(field2);
+          }
+         
+        }
+        else
+        {
+            this.fields[nameA] = true;
+            this.fields[nameB] = true;
+        }
+
+        return this.fields[nameA];
     }
 
 
 
 }
 
-const g = document.querySelector('form');
+const formA = new FormChecker({ form:document.querySelector('#formA'), normalShowError:normalShowErrorA }); 
+const formB = new FormChecker({ form:document.querySelector('#formB'), pwd1Id:'password1', pwd2Id:'password2', normalShowError:normalShowErrorB });
 
-const h = new FormChecker({ form:g });
+function normalShowErrorA(input,msg="Invalid field")
+{
+     input.style.border = "1px solid red";
+}
+
+function normalShowErrorB(input,msg="Invalid field")
+{
+     input.style.background = "salmon";
+
+}
+
+
 
 
 
